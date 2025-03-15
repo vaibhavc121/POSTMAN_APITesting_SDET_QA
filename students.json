@@ -29,6 +29,26 @@
         "C#",
         "RestAPI"
       ]
+    },
+    {
+      "id": "6f53",
+      "name": "John",
+      "location": "india",
+      "phone": "1234567890",
+      "courses": [
+        "Java",
+        "Selenium"
+      ]
+    },
+    {
+      "id": "80c8",
+      "name": "scott",
+      "location": "india",
+      "phone": "1234567890",
+      "courses": [
+        "c",
+        "cpp"
+      ]
     }
   ]
 }
