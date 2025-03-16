@@ -122,11 +122,49 @@
 			"item": [
 				{
 					"name": "get single student data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response. json () ;\r",
+									"pm. test (\"Test data type of the response\", () => {\r",
+									"pm.expect(jsonData) .to.be.an(\"object\");\r",
+									"pm.expect (jsonData.name) .to.be.a(\"string\");\r",
+									"pm.expect(jsonData.id).to.be.a(\"string\");\r",
+									"pm.expect(jsonData.courses).to.be.an(\"array\");\r",
+									"});\r",
+									"//test array contents in body\r",
+									"pm.test(\"Test array properties\", () => {\r",
+									"//courses includes \"Java\"\r",
+									"pm.expect(jsonData.courses).to.include (\"Java\");\r",
+									"//courses array must include all listed\r",
+									"pm.expect(jsonData.courses)\r",
+									".to.have.members ( [\"Java\", \"Selenium\"]) ;\r",
+									"});\r",
+									"\r",
+									"//validating json fields in response\r",
+									"pm.test(\"value of location field is India\", ()=> {\r",
+									"var jsonData = pm.response. json() ;\r",
+									"pm.expect(jsonData.id).to.eql(\"1\");\r",
+									"pm.expect(jsonData.name).to.eql(\"John\");\r",
+									"pm.expect(jsonData.location) .to.eql(\"india\");\r",
+									"pm.expect(jsonData.phone).to.eql(\"1234567890\");\r",
+									"pm.expect(jsonData.courses[0]) .to.eql (\"Java\");\r",
+									"pm.expect(jsonData.courses[1]).to.eql(\"Selenium\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/students/c7fc",
+							"raw": "http://localhost:3000/students/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -134,7 +172,7 @@
 							"port": "3000",
 							"path": [
 								"students",
-								"c7fc"
+								"1"
 							]
 						}
 					},
@@ -142,6 +180,60 @@
 				},
 				{
 					"name": "get all students data",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => \r",
+									"    {\r",
+									"        pm.response.to.have.status (200);\r",
+									"    }\r",
+									");\r",
+									"\r",
+									"pm.test (\"Successful POST request\", () => \r",
+									"    {\r",
+									"        pm.expect (pm.response.code).to.be.oneOf([200,202]) ;\r",
+									"    }\r",
+									");\r",
+									"\r",
+									"pm.test(\"Status code name has string- OK\", () => {\r",
+									"pm.response.to.have.status (\"OK\") ;\r",
+									"});\r",
+									"\r",
+									"pm. test(\"Content-Type header is present\", () => {\r",
+									"pm.response. to.have.header (\"Content-Type\") ;\r",
+									"});\r",
+									"\r",
+									"pm. test (\"Content-Type header is application/json\", () =>\r",
+									"{\r",
+									"    pm.expect (pm. response.headers.get ('Content-Type')) . to.eql ('application/json');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 10ms\", () => {\r",
+									"pm.expect(pm.response.responseTime).to.be.below(10);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -162,6 +254,50 @@
 				},
 				{
 					"name": "create new student",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => \r",
+									"    {\r",
+									"        pm.response.to.have.status (200);\r",
+									"    }\r",
+									");\r",
+									"\r",
+									"pm.test (\"Successful POST request\", () => \r",
+									"    {\r",
+									"        pm.expect (pm.response.code).to.be.oneOf([200,202]) ;\r",
+									"    }\r",
+									");\r",
+									"\r",
+									"pm.test(\"Status code name has string- OK\", () => {\r",
+									"pm.response.to.have.status (\"OK\") ;\r",
+									"});\r",
+									"\r",
+									"pm. test(\"Content-Type header is present\", () => {\r",
+									"pm.response. to.have.header (\"Content-Type\") ;\r",
+									"});\r",
+									"\r",
+									"pm. test (\"Content-Type header is application/json\", () =>\r",
+									"{\r",
+									"    pm.expect (pm. response.headers.get ('Content-Type')) . to.eql ('application/json');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 10ms\", () => {\r",
+									"pm.expect(pm.response.responseTime).to.be.below(10);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -191,6 +327,50 @@
 				},
 				{
 					"name": "update student",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => \r",
+									"    {\r",
+									"        pm.response.to.have.status (200);\r",
+									"    }\r",
+									");\r",
+									"\r",
+									"pm.test (\"Successful POST request\", () => \r",
+									"    {\r",
+									"        pm.expect (pm.response.code).to.be.oneOf([200,202]) ;\r",
+									"    }\r",
+									");\r",
+									"\r",
+									"pm.test(\"Status code name has string- OK\", () => {\r",
+									"pm.response.to.have.status (\"OK\") ;\r",
+									"});\r",
+									"\r",
+									"pm. test(\"Content-Type header is present\", () => {\r",
+									"pm.response. to.have.header (\"Content-Type\") ;\r",
+									"});\r",
+									"\r",
+									"pm. test (\"Content-Type header is application/json\", () =>\r",
+									"{\r",
+									"    pm.expect (pm. response.headers.get ('Content-Type')) . to.eql ('application/json');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 10ms\", () => {\r",
+									"pm.expect(pm.response.responseTime).to.be.below(10);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"method": "PUT",
 						"header": [],
@@ -220,6 +400,50 @@
 				},
 				{
 					"name": "Patch",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => \r",
+									"    {\r",
+									"        pm.response.to.have.status (200);\r",
+									"    }\r",
+									");\r",
+									"\r",
+									"pm.test (\"Successful POST request\", () => \r",
+									"    {\r",
+									"        pm.expect (pm.response.code).to.be.oneOf([200,202]) ;\r",
+									"    }\r",
+									");\r",
+									"\r",
+									"pm.test(\"Status code name has string- OK\", () => {\r",
+									"pm.response.to.have.status (\"OK\") ;\r",
+									"});\r",
+									"\r",
+									"pm. test(\"Content-Type header is present\", () => {\r",
+									"pm.response. to.have.header (\"Content-Type\") ;\r",
+									"});\r",
+									"\r",
+									"pm. test (\"Content-Type header is application/json\", () =>\r",
+									"{\r",
+									"    pm.expect (pm. response.headers.get ('Content-Type')) . to.eql ('application/json');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 10ms\", () => {\r",
+									"pm.expect(pm.response.responseTime).to.be.below(10);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "noauth"
@@ -252,6 +476,50 @@
 				},
 				{
 					"name": "Delete stud",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => \r",
+									"    {\r",
+									"        pm.response.to.have.status (200);\r",
+									"    }\r",
+									");\r",
+									"\r",
+									"pm.test (\"Successful POST request\", () => \r",
+									"    {\r",
+									"        pm.expect (pm.response.code).to.be.oneOf([200,202]) ;\r",
+									"    }\r",
+									");\r",
+									"\r",
+									"pm.test(\"Status code name has string- OK\", () => {\r",
+									"pm.response.to.have.status (\"OK\") ;\r",
+									"});\r",
+									"\r",
+									"pm. test(\"Content-Type header is present\", () => {\r",
+									"pm.response. to.have.header (\"Content-Type\") ;\r",
+									"});\r",
+									"\r",
+									"pm. test (\"Content-Type header is application/json\", () =>\r",
+									"{\r",
+									"    pm.expect (pm. response.headers.get ('Content-Type')) . to.eql ('application/json');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 10ms\", () => {\r",
+									"pm.expect(pm.response.responseTime).to.be.below(10);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"method": "DELETE",
 						"header": [],
@@ -271,6 +539,197 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "StudentAPIs Chaining",
+			"item": [
+				{
+					"name": "create new student",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData= JSON.parse(responseBody);\r",
+									"jsonData.id;\r",
+									"pm.environment.set(\"id\",jsonData.id);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n    \"name\": \"scott\",\r\n    \"location\": \"india\",\r\n    \"phone\": \"1234567890\",\r\n    \"courses\": [\r\n      \"c\",\r\n      \"cpp\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/students/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"students",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get single student data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/students/{{id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"students",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete stud",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/students/{{id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"students",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Script",
+			"item": [
+				{
+					"name": "New Request",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"console.log(\"pre-request script at request level\");"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"console.log(\"post-response script at collection level\");"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							"console.log(\"pre-request script at folder level\");"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							"console.log(\"post-response script at collection level\");"
+						]
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"console.log(\"pre-request script at collection level\");"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"console.log(\"post-response script at collection level\");"
+				]
+			}
 		}
 	]
 }
