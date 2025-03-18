@@ -779,16 +779,44 @@
 			]
 		},
 		{
-			"name": "BooksAPI",
+			"name": "BooksAPI-DataDriven",
 			"item": [
 				{
-					"name": "Create token",
+					"name": "submit order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"status code is 201\",()=>\r",
+									"{\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"var jsonData= JSON.parse(responseBody);\r",
+									"pm.environment.set(\"orderid_env\",jsonData.orderId);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "d97a0d8ac53fca7cbeff250f3b47084c5c113c22fd57298e400e6d373d63a598",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"clientName\": \"Postman\",\r\n\"clientEmail\": \"vaibhavc121@gmail.com\"\r\n}",
+							"raw": "{\r\n    \"bookId\": \"{{BookID}}\",\r\n\"customerName\": \"{{CustomerName}}\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -796,7 +824,7 @@
 							}
 						},
 						"url": {
-							"raw": "https://simple-books-api.glitch.me/api-clients/",
+							"raw": "https://simple-books-api.glitch.me/orders",
 							"protocol": "https",
 							"host": [
 								"simple-books-api",
@@ -804,18 +832,120 @@
 								"me"
 							],
 							"path": [
-								"api-clients",
-								""
+								"orders"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "status of books",
+					"name": "get single order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"}); \r",
+									"\r",
+									"pm.test(\"check order id present in the response body\", ()=>\r",
+									"{\r",
+									"    var jsonData= pm.response.json(); \r",
+									"    pm.expect(jsonData.id).to.eql(pm.environment.get(\"orderid_env\"));\r",
+									"\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "d97a0d8ac53fca7cbeff250f3b47084c5c113c22fd57298e400e6d373d63a598",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
-						"header": []
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://simple-books-api.glitch.me/orders/{{orderid_env}}",
+							"protocol": "https",
+							"host": [
+								"simple-books-api",
+								"glitch",
+								"me"
+							],
+							"path": [
+								"orders",
+								"{{orderid_env}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});\r",
+									"\r",
+									"pm.environment.unset(\"orderid_env\");"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "d97a0d8ac53fca7cbeff250f3b47084c5c113c22fd57298e400e6d373d63a598",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://simple-books-api.glitch.me/orders/{{orderid_env}}",
+							"protocol": "https",
+							"host": [
+								"simple-books-api",
+								"glitch",
+								"me"
+							],
+							"path": [
+								"orders",
+								"{{orderid_env}}"
+							]
+						}
 					},
 					"response": []
 				}
