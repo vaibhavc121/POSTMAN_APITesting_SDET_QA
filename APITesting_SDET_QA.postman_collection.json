@@ -950,6 +950,72 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "file upload",
+			"item": [
+				{
+					"name": "SingleFileUpload",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:9090/uploadFile",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"uploadFile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "MultipleFilesUpload",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "files",
+									"type": "file",
+									"src": [
+										"/D:/OneDrive - Bharatiya Vidya Bhavans Sardar Patel Institute Of Technology/#Testing/API Testing/POSTMAN_APITesting_SDET_QA/orders_json_data.json",
+										"/D:/OneDrive - Bharatiya Vidya Bhavans Sardar Patel Institute Of Technology/#Testing/API Testing/POSTMAN_APITesting_SDET_QA/students.json"
+									]
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:9090/uploadMultipleFile",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"uploadMultipleFile"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	],
 	"event": [
