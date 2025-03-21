@@ -1016,6 +1016,19 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "swagger",
+			"item": [
+				{
+					"name": "New Request",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
 		}
 	],
 	"event": [
